@@ -43,10 +43,10 @@ const Tally = ({
   return (
     <div>
       {renderWarningMessage()}
-      {renderHelper()}
       {renderNewCategoryButton()}
       {renderForm()}
       {renderItems()}
+      {renderHelper()}
     </div>
   );
 };
