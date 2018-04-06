@@ -37,16 +37,21 @@ class TallyWrapper extends React.Component {
       })
     }, this.storeItemsInLocalStorage);
 
-  handleDeleteClick = id => {
-    const items = this.state.items;
-
+  handleDeleteClick = id =>
     this.setState({
-      items: items.filter(item => item.id !== id)
+      items: this.state.items.filter(item => item.id !== id)
     }, this.storeItemsInLocalStorage);
-  }
 
   handleNewCategoryClick = () =>
     this.showForm();
+
+  handleResetAll = () =>
+    this.setState({
+      items: this.state.items.map(item => ({
+        ...item,
+        currentValue: 0
+      }))
+    }, this.storeItemsInLocalStorage);
 
   hideForm = () =>
     this.setState({ formVisible: false });
@@ -75,6 +80,7 @@ class TallyWrapper extends React.Component {
           onRemoveClick={this.handleRemoveClick}
           onDeleteClick={this.handleDeleteClick}
           onNewCategory={this.handleNewCategoryClick}
+          onResetAll={this.handleResetAll}
           hideForm={this.hideForm}
           showForm={this.showForm}
           updateItems={this.updateItems}

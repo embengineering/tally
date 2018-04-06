@@ -9,6 +9,7 @@ const Tally = ({
   onRemoveClick,
   onDeleteClick,
   onNewCategory,
+  onResetAll,
   hideForm,
   showForm,
   updateItems
@@ -25,6 +26,9 @@ const Tally = ({
 
   const renderNewCategoryButton = () =>
     <button className="btn btn-link" onClick={onNewCategory}>New Category</button>;
+
+    const renderResetCategoriesButton = () =>
+    <button className="btn btn-link text-muted" onClick={onResetAll}>Reset All</button>;
 
   const renderForm = () =>
     formVisible && <TallyCategoryFormWrapper
@@ -48,6 +52,7 @@ const Tally = ({
   return (
     <div>
       {renderNewCategoryButton()}
+      {renderResetCategoriesButton()}
       {renderForm()}
       {renderItems()}
       {renderHelper()}
