@@ -4,44 +4,66 @@ import Tally from './Tally';
 class TallyWrapper extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      items: [
-        { label: 'Water', currentValue: 0, defaultValue: 8, id: '8038a70a-21b6-592b-9e12-e055dca7b8bf', fact: 'Water makes up approximately 70% of a human’s body weight – but DON’T stop drinking water to lose weight!' },
-        { label: 'Veggies', currentValue: 0, defaultValue: 5, id: '15e4db73-08a2-56d3-8ccb-85b767016f49', fact: 'Broccoli contains more protein than steak!' }
-      ],
+      items: this.getItemsFromLocalStorage(),
       formVisible: false
     };
   }
 
-  handleAddClick = id => {
+  handleAddClick = id =>
     this.setState({
       items: this.state.items.map(item => {
+        if(item.id === id && item.currentValue > 0) console.log(`${item.description} increased to ${Number(item.currentValue) + 1}`);
         return item.id === id
-          ? Object.assign({}, item, {
-              currentValue: item.currentValue + 1
-            })
+          ? {
+              ...item,
+              currentValue: Number(item.currentValue) + 1
+            }
           : item;
       })
-    });
-  }
+    }, this.storeItemsInLocalStorage);
 
-  handleRemoveClick = id => {
+  handleRemoveClick = id =>
     this.setState({
       items: this.state.items.map(item => {
+        if(item.id === id && item.currentValue > 0) console.log(`${item.description} decreased to ${Number(item.currentValue) - 1}`);
         return item.id === id && item.currentValue > 0
-          ? Object.assign({}, item, {
-              currentValue: item.currentValue - 1
-            })
+          ? {
+            ...item,
+            currentValue: Number(item.currentValue) - 1
+          }
           : item;
       })
-    });
+    }, this.storeItemsInLocalStorage);
+
+  handleDeleteClick = id => {
+    const items = this.state.items;
+
+    this.setState({
+      items: items.filter(item => item.id !== id)
+    }, this.storeItemsInLocalStorage);
   }
 
   handleNewCategoryClick = () =>
+    this.showForm();
+
+  hideForm = () =>
+    this.setState({ formVisible: false });
+
+  showForm = () =>
     this.setState({ formVisible: true });
 
-  handleCancelForm = () =>
-  this.setState({ formVisible: false });
+  updateItems = (items = []) =>
+    this.setState({ items }, this.storeItemsInLocalStorage);
+
+  getItemsFromLocalStorage = () =>
+    JSON.parse(localStorage.getItem('tallyItems') || '[]');
+
+  storeItemsInLocalStorage = () => {
+    localStorage.setItem('tallyItems', JSON.stringify(this.state.items));
+    console.log('Items updated in local storage:', this.state.items)
+  }
 
   render() {
     return (
@@ -49,10 +71,13 @@ class TallyWrapper extends React.Component {
         <Tally
           items={this.state.items}
           formVisible={this.state.formVisible}
-          onAddClick={this.handleAddClick}
+          onAddClick={this.handleAddClick.bind(this)}
           onRemoveClick={this.handleRemoveClick}
+          onDeleteClick={this.handleDeleteClick}
           onNewCategory={this.handleNewCategoryClick}
-          onCancelForm={this.handleCancelForm}
+          hideForm={this.hideForm}
+          showForm={this.showForm}
+          updateItems={this.updateItems}
         />
       </div>
     );
