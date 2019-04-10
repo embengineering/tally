@@ -1,5 +1,6 @@
 {
   "name": "micro-front-ends-tally",
+  "description": "Small Tally application for tracking stuff",
   "version": "0.1.0",
   "private": true,
   "homepage": "http://embengineering.com/micro-front-ends-tally",
