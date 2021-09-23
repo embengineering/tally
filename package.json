@@ -1,13 +1,13 @@
 {
-  "name": "micro-front-ends-tally",
+  "name": "embengineering-tally",
   "description": "Small Tally application for tracking stuff",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://embengineering.com/micro-front-ends-tally",
+  "homepage": "http://embengineering.com/tally",
   "dependencies": {
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-scripts": "1.1.4",
+    "react-scripts": "^4.0.3",
     "uuid": "^3.2.1"
   },
   "scripts": {
@@ -20,5 +20,17 @@
   },
   "devDependencies": {
     "gh-pages": "^1.1.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
